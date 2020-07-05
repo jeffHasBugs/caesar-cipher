@@ -7,8 +7,10 @@ void encrypt(std::string &message, long key)
     for (char &c : message) {
         // int(c) to prevent overflow
         if (isalpha(c)) {
+            // measure how much the (to-be) encrypted character
+            // goes over the limit ('z') to manually correct
             if (islower(c) && int(c) + key > 'z') {
-                c = 'a' + (int(c) + key - 'z') - 1;
+                c = 'a' + (int(c) + key - 'z') - 1; // -1 to correct for 'a'
             }
             else if (isupper(c) && int(c) + key > 'Z') {
                 c = 'A' + (int(c) + key - 'Z') - 1;
@@ -25,7 +27,7 @@ void decrypt(std::string &message, long key)
         // int(c) to prevent overflow
         if (isalpha(c)) {
             if (islower(c) && int(c) - key < 'a') {
-                c = 'z' - ('a' - (int(c) - key)) + 1;
+                c = 'z' - ('a' - (int(c) - key)) + 1; // +1 to correct for 'z'
             }
             else if (isupper(c) && int(c) - key < 'A') {
                 c = 'Z' - ('A' - (int(c) - key)) + 1;
